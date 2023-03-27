@@ -16,6 +16,8 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
+
 
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
@@ -85,6 +87,11 @@ public class CardIOCordovaPlugin extends CordovaPlugin {
             this.callbackContext.error("Card Scanning is not enabled");
         }
     }
+    
+    public Bundle onSaveInstanceState() {
+       Bundle state = new Bundle();
+       return state;
+    }
 
     // onActivityResult
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -105,6 +112,10 @@ public class CardIOCordovaPlugin extends CordovaPlugin {
                 this.callbackContext.error(resultCode);
             }
         }
+    }
+    
+    public void onRestoreStateForActivityResult(Bundle state, CallbackContext callbackContext) {
+        this.callbackContext = callbackContext;
     }
 
     private JSONObject toJSONObject(CreditCard card) {
